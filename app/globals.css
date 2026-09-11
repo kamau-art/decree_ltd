@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gold: #c9a227;
+  --color-gold-light: #e6c850;
+  --color-brand: #004080;
+  --color-brand-dark: #00305e;
+  --color-brand-light: #e3f1f8;
+  --color-decree: #40a0e0;
+  --color-decree-deep: #2080a0;
+  --color-decree-dark: #004080;
+  --color-blue-50: #f2f8fd;
+  --color-blue-100: #e3f1f8;
+  --color-blue-200: #c6e2f4;
+  --color-blue-300: #9ed0ee;
+  --color-blue-400: #68b8ea;
+  --color-blue-500: #40a0e0;
+  --color-blue-600: #2a87c7;
+  --color-blue-700: #2080a0;
+  --color-blue-800: #13618c;
+  --color-blue-900: #004080;
+  --color-blue-950: #002d5e;
+
+  --animate-fade-in-up: fade-in-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-hero-in: hero-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes hero-in {
+    from {
+      opacity: 0;
+      transform: translateY(28px) scale(0.99);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1rem;
+  max-width: 80rem;
+}
+
+body {
+  background-color: #f8fafc;
+  color: #1e293b;
+  font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+}
+
+::selection {
+  background: rgba(64, 160, 224, 0.3);
+}
+
+.bg-grid {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #ffffff 0%, #9ed0ee 55%, #e6c850 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}

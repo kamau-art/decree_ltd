@@ -1,0 +1,56 @@
+{
+  "style": "default",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "tailwind.config.ts",
+    "css": "app/globals.css",
+    "cssVariableTheme": true,
+    "prefix": "",
+    "classSeparator": ""
+  },
+  "aliases": {
+    "utils": "@/lib/utils",
+    "components": "@/components"
+  },
+  "conventions": {
+    "css": "^\\.",
+    "css-modules": "^\\.",
+    "near-others": "^(?!\\.\\.?\\/).+\\.(css|scss|sass|stylus)$",
+    "jsx": "^\\.",
+    "js": "^\\.",
+    "near-jsx": "^(?!\\.\\.?\\/).+\\.(js|jsx|mjs|cjs)$",
+    "html": "^\\.",
+    "near-html": "^(?!\\.\\.?\\/).+\\.(html|ppt|pptx|svg)$",
+    "mdx": "^\\.",
+    "near-mdx": "^(?!\\.\\.?\\/).+\\.(mdx)$",
+    "md": "^\\.",
+    "near-md": "^(?!\\.\\.?\\/).+\\.(md|markdown)$"
+  },
+  "typescript": {
+    "stripTsExtension": true
+  },
+  "eslint": {
+    "config": ".eslintrc.json",
+    "indent": "auto",
+    "rules": {}
+  },
+  "include": [
+    "app/**/*",
+    "components/**/*",
+    "lib/**/*",
+    "hooks/**/*"
+  ],
+  "exclude": [
+    "node_modules/**/*"
+  ],
+  "inlineStyles": {
+    "className": "inline-style",
+    "classNamePrefix": "",
+    "prefix": ""
+  },
+  "pnpm": false,
+  "yarn": false,
+  "bun": false,
+  "npm": true
+}
