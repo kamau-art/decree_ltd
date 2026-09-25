@@ -1,0 +1,20 @@
+services:
+  web:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    image: decree-ltd:local
+    container_name: decree_web
+    env_file:
+      - ../.env
+      - ../.env.web
+    ports:
+      - "3001:3000"
+    networks:
+      - okapi_two_default
+    restart: unless-stopped
+
+networks:
+  okapi_two_default:
+    external: true
+    name: okapi_two_default
