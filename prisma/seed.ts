@@ -70,8 +70,7 @@ const sampleServices = [
     category: "Water Drilling & Boreholes",
     description:
       "Reliable water supply solutions for residential, commercial, and industrial needs — including hard rock drilling, well rehabilitation, and water testing.",
-    image:
-      "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1600&q=80",
+    image: "/services/water.jpg",
   },
   {
     slug: "power-installation",
@@ -79,8 +78,7 @@ const sampleServices = [
     category: "Power Installation & Electrical",
     description:
       "Complete electrical systems, transformers, backup generators, industrial power, and grid connections — built to certified safety standards.",
-    image:
-      "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=1600&q=80",
+    image: "/services/power.jpg",
   },
   {
     slug: "tank-construction",

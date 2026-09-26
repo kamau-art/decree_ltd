@@ -60,8 +60,8 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <div className="text-sm text-gray-500">Website</div>
-                      <a href="https://www.decreelimited.co.ke" target="_blank" rel="noopener noreferrer" className="text-gray-800 font-medium hover:text-blue-600 transition-colors">
-                        www.decreelimited.co.ke
+                      <a href="https://decreelimited.com" target="_blank" rel="noopener noreferrer" className="text-gray-800 font-medium hover:text-blue-600 transition-colors">
+                        decreelimited.com
                       </a>
                     </div>
                   </li>

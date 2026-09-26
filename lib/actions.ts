@@ -90,13 +90,21 @@ export async function createPortfolioItem(formData: FormData) {
   const title = formData.get("title") as string
   const category = formData.get("category") as string
   const description = (formData.get("description") as string) || null
+  const image = ((formData.get("image") as string) || "").trim()
 
-  if (!title || !category) return
+  if (!title || !category || !image) return
 
   const count = await prisma.portfolio.count()
 
   await prisma.portfolio.create({
-    data: { title, category, description, order: count + 1, isActive: true },
+    data: {
+      title,
+      category,
+      description,
+      images: [image],
+      order: count + 1,
+      isActive: true,
+    },
   })
 
   revalidatePath("/admin/portfolio")

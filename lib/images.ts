@@ -7,9 +7,9 @@ const u = (id: string) =>
 
 export const images = {
   homeHero: u("photo-1504307651254-35680f356dfd"),
-  homeWork: u("photo-1581094794329-c8112a89af12"),
-  waterDrilling: u("photo-1581094794329-c8112a89af12"),
-  powerInstallation: u("photo-1621905251189-08b45d6a269e"),
+  homeWork: "/services/water.jpg",
+  waterDrilling: "/services/water.jpg",
+  powerInstallation: "/services/power.jpg",
   tankConstruction: u("photo-1504328345606-18bbc8c9d7d1"),
   solarSolutions: u("photo-1509391366360-2e959784a276"),
   pipingServices: u("photo-1517677208171-0bc6725a3e60"),

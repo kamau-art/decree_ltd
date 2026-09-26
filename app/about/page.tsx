@@ -32,10 +32,9 @@ const values = [
 ]
 
 const team = [
-  { name: "John Doe", role: "Founder & Managing Director" },
-  { name: "Jane Smith", role: "Head of Operations" },
-  { name: "Michael Brown", role: "Lead Engineer" },
-  { name: "Sarah Wilson", role: "Project Manager" },
+  { name: "Isaiah Kimathi", role: "Managing Director" },
+  { name: "Jane Wapendwa", role: "Operations Lead" },
+  { name: "Odipo Mwele", role: "Technical Lead" },
 ]
 
 export default function AboutPage() {
@@ -120,7 +119,7 @@ export default function AboutPage() {
               Leadership Team
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {team.map((member, i) => (
               <div
                 key={i}

@@ -60,6 +60,19 @@ export default async function AdminPortfolioPage() {
                 placeholder="Project description"
               />
             </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1">Image URL</label>
+              <input
+                name="image"
+                type="url"
+                required
+                pattern="https://.*"
+                title="Enter an HTTPS image URL"
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand"
+                placeholder="https://... (required)"
+              />
+              <p className="text-xs text-gray-500 mt-1">Add at least one HTTPS image URL for the project.</p>
+            </div>
             <button
               type="submit"
               className="w-full bg-brand text-white py-2 rounded-lg font-semibold hover:bg-brand-dark transition-colors"
