@@ -12,9 +12,14 @@ services:
       - "4040:3000"
     networks:
       - marobix_default
+    volumes:
+      - decree_uploads:/app/public/uploads
     restart: unless-stopped
 
 networks:
   marobix_default:
     external: true
     name: marobix_default
+
+volumes:
+  decree_uploads:

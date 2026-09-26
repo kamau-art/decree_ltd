@@ -1,7 +1,22 @@
 "use server"
 
+import { mkdir, unlink, writeFile } from "node:fs/promises"
+import path from "node:path"
+import { randomUUID } from "node:crypto"
 import { revalidatePath } from "next/cache"
 import { prisma } from "@/lib/prisma"
+import { requireAdmin } from "@/lib/auth"
+
+const uploadDirectory = path.join(process.cwd(), "public", "uploads")
+const maxImageSize = 5 * 1024 * 1024
+const imageExtensions: Record<string, string> = {
+  "image/jpeg": ".jpg",
+  "image/jpg": ".jpg",
+  "image/png": ".png",
+  "image/webp": ".webp",
+  "image/avif": ".avif",
+  "image/gif": ".gif",
+}
 
 export async function createService(formData: FormData) {
   const slug = formData.get("slug") as string
@@ -87,25 +102,42 @@ export async function deleteTestimonial(id: string) {
 }
 
 export async function createPortfolioItem(formData: FormData) {
-  const title = formData.get("title") as string
-  const category = formData.get("category") as string
-  const description = (formData.get("description") as string) || null
-  const image = ((formData.get("image") as string) || "").trim()
+  if (!(await requireAdmin())) return
 
-  if (!title || !category || !image) return
+  const title = ((formData.get("title") as string) || "").trim()
+  const category = ((formData.get("category") as string) || "").trim()
+  const description = ((formData.get("description") as string) || "").trim() || null
+  const image = formData.get("image")
 
-  const count = await prisma.portfolio.count()
+  if (!title || !category || !image || typeof image === "string" || image.size === 0) return
+  if (image.size > maxImageSize) return
 
-  await prisma.portfolio.create({
-    data: {
-      title,
-      category,
-      description,
-      images: [image],
-      order: count + 1,
-      isActive: true,
-    },
-  })
+  const extension = imageExtensions[image.type]
+  if (!extension) return
+
+  const filename = `${randomUUID()}${extension}`
+  const imagePath = path.join(uploadDirectory, filename)
+
+  await mkdir(uploadDirectory, { recursive: true })
+  await writeFile(imagePath, Buffer.from(await image.arrayBuffer()))
+
+  try {
+    const count = await prisma.portfolio.count()
+
+    await prisma.portfolio.create({
+      data: {
+        title,
+        category,
+        description,
+        images: [`/uploads/${filename}`],
+        order: count + 1,
+        isActive: true,
+      },
+    })
+  } catch (error) {
+    await unlink(imagePath).catch(() => undefined)
+    throw error
+  }
 
   revalidatePath("/admin/portfolio")
   revalidatePath("/portfolio")

@@ -27,7 +27,7 @@ export default async function AdminPortfolioPage() {
           <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
             <Plus size={18} /> Add Project
           </h2>
-          <form action={createPortfolioItem} className="space-y-4">
+          <form action={createPortfolioItem} encType="multipart/form-data" className="space-y-4">
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-1">Title</label>
               <input
@@ -61,17 +61,15 @@ export default async function AdminPortfolioPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">Image URL</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-1">Project Image</label>
               <input
                 name="image"
-                type="url"
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/avif,image/gif"
                 required
-                pattern="https://.*"
-                title="Enter an HTTPS image URL"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand"
-                placeholder="https://... (required)"
               />
-              <p className="text-xs text-gray-500 mt-1">Add at least one HTTPS image URL for the project.</p>
+              <p className="text-xs text-gray-500 mt-1">Upload at least one image (max 5 MB).</p>
             </div>
             <button
               type="submit"
