@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
-import Image from "next/image"
 import Link from "next/link"
-import { Droplets, Zap, Building2, Sun, Wrench, ArrowRight, Cog } from "lucide-react"
+import { ArrowRight } from "lucide-react"
+import PortfolioGrid from "@/components/PortfolioGrid"
 import { prisma } from "@/lib/prisma"
 
 export const metadata: Metadata = {
@@ -12,20 +12,17 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic"
 
-const categoryIcons: Record<string, React.ElementType> = {
-  "Water Drilling": Droplets,
-  "Power Installation": Zap,
-  "Tank Construction": Building2,
-  "Solar Solutions": Sun,
-  "Piping Services": Wrench,
-}
-
-const DefaultIcon = Cog
-
 export default async function PortfolioPage() {
   const projects = await prisma.portfolio.findMany({
     where: { isActive: true },
     orderBy: { order: "asc" },
+    select: {
+      id: true,
+      title: true,
+      category: true,
+      description: true,
+      images: true,
+    },
   })
 
   return (
@@ -51,42 +48,7 @@ export default async function PortfolioPage() {
               We will be showcasing our completed projects here soon. Please check back shortly.
             </p>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects.map((project) => {
-                const Icon = categoryIcons[project.category] || DefaultIcon
-                return (
-                  <div
-                    key={project.id}
-                    className="group bg-white rounded-2xl border border-gray-100 shadow-lg overflow-hidden hover:shadow-2xl hover:-translate-y-1 hover:border-blue-200 transition-all duration-300"
-                  >
-                    {project.images[0] ? (
-                      <div className="relative h-56 overflow-hidden">
-                        <Image
-                          src={project.images[0]}
-                          alt={project.title}
-                          fill
-                          sizes="(max-width: 1024px) 100vw, 33vw"
-                          className="object-cover group-hover:scale-105 transition-transform duration-700"
-                        />
-                      </div>
-                    ) : (
-                      <div className="h-56 bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center">
-                        <Icon className="text-white/80 group-hover:scale-110 transition-transform" size={48} />
-                      </div>
-                    )}
-                    <div className="p-6">
-                      <span className="inline-block text-xs font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full mb-3">
-                        {project.category}
-                      </span>
-                      <h2 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h2>
-                      {project.description && (
-                        <p className="text-gray-600">{project.description}</p>
-                      )}
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
+            <PortfolioGrid projects={projects} />
           )}
 
           <div className="text-center mt-16">

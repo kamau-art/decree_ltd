@@ -61,15 +61,18 @@ export default async function AdminPortfolioPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">Project Image</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-1">Project Images</label>
               <input
                 name="image"
                 type="file"
                 accept="image/jpeg,image/png,image/webp,image/avif,image/gif"
+                multiple
                 required
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand"
               />
-              <p className="text-xs text-gray-500 mt-1">Upload at least one image (max 5 MB).</p>
+              <p className="text-xs text-gray-500 mt-1">
+                Select up to 8 images (max 5 MB each).
+              </p>
             </div>
             <button
               type="submit"
@@ -91,6 +94,9 @@ export default async function AdminPortfolioPage() {
                   {item.category}
                 </span>
                 <h2 className="font-bold text-gray-900 mb-1">{item.title}</h2>
+                <p className="text-xs text-gray-500 mb-2">
+                  {item.images.length} {item.images.length === 1 ? "image" : "images"}
+                </p>
                 {item.description && <p className="text-gray-600 text-sm">{item.description}</p>}
               </div>
               <form action={deletePortfolioItem.bind(null, item.id)}>

@@ -9,6 +9,7 @@ import { requireAdmin } from "@/lib/auth"
 
 const uploadDirectory = path.join(process.cwd(), "data", "uploads")
 const maxImageSize = 5 * 1024 * 1024
+const maxImagesPerProject = 8
 const imageExtensions: Record<string, string> = {
   "image/jpeg": ".jpg",
   "image/jpg": ".jpg",
@@ -107,21 +108,36 @@ export async function createPortfolioItem(formData: FormData) {
   const title = ((formData.get("title") as string) || "").trim()
   const category = ((formData.get("category") as string) || "").trim()
   const description = ((formData.get("description") as string) || "").trim() || null
-  const image = formData.get("image")
+  const imageFiles = formData
+    .getAll("image")
+    .filter((entry): entry is File => typeof entry !== "string")
 
-  if (!title || !category || !image || typeof image === "string" || image.size === 0) return
-  if (image.size > maxImageSize) return
+  if (!title || !category || imageFiles.length === 0) return
+  if (imageFiles.length > maxImagesPerProject) return
+  if (imageFiles.some((image) => image.size === 0 || image.size > maxImageSize)) return
 
-  const extension = imageExtensions[image.type]
-  if (!extension) return
+  const filesToSave = imageFiles.map((image) => {
+    const extension = imageExtensions[image.type]
+    return extension ? { image, extension } : null
+  })
 
-  const filename = `${randomUUID()}${extension}`
-  const imagePath = path.join(uploadDirectory, filename)
+  if (filesToSave.some((file) => file === null)) return
 
-  await mkdir(uploadDirectory, { recursive: true })
-  await writeFile(imagePath, Buffer.from(await image.arrayBuffer()))
+  const validFiles = filesToSave.filter(
+    (file): file is { image: File; extension: string } => file !== null
+  )
+  const savedPaths: string[] = []
 
   try {
+    await mkdir(uploadDirectory, { recursive: true })
+
+    for (const { image, extension } of validFiles) {
+      const filename = `${randomUUID()}${extension}`
+      const imagePath = path.join(uploadDirectory, filename)
+      await writeFile(imagePath, Buffer.from(await image.arrayBuffer()))
+      savedPaths.push(imagePath)
+    }
+
     const count = await prisma.portfolio.count()
 
     await prisma.portfolio.create({
@@ -129,13 +145,13 @@ export async function createPortfolioItem(formData: FormData) {
         title,
         category,
         description,
-        images: [`/uploads/${filename}`],
+        images: savedPaths.map((imagePath) => `/uploads/${path.basename(imagePath)}`),
         order: count + 1,
         isActive: true,
       },
     })
   } catch (error) {
-    await unlink(imagePath).catch(() => undefined)
+    await Promise.all(savedPaths.map((imagePath) => unlink(imagePath).catch(() => undefined)))
     throw error
   }
 
