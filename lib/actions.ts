@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache"
 import { prisma } from "@/lib/prisma"
 import { requireAdmin } from "@/lib/auth"
 
-const uploadDirectory = path.join(process.cwd(), "public", "uploads")
+const uploadDirectory = path.join(process.cwd(), "data", "uploads")
 const maxImageSize = 5 * 1024 * 1024
 const imageExtensions: Record<string, string> = {
   "image/jpeg": ".jpg",

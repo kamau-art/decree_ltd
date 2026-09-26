@@ -12,5 +12,5 @@ decree.jpeg
 tsconfig.tsbuildinfo
 docker
 *.log
-public/uploads
+data/uploads
 .DS_Store

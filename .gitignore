@@ -35,7 +35,7 @@ yarn-error.log*
 !.env.example
 
 # uploaded project images
-/public/uploads/
+/data/uploads/
 
 # vercel
 .vercel

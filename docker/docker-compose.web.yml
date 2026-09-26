@@ -13,7 +13,7 @@ services:
     networks:
       - marobix_default
     volumes:
-      - decree_uploads:/app/public/uploads
+      - decree_uploads:/app/data/uploads
     restart: unless-stopped
 
 networks:
