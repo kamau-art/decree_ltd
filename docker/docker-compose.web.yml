@@ -9,12 +9,12 @@ services:
       - ../.env
       - ../.env.web
     ports:
-      - "3001:3000"
+      - "4040:3000"
     networks:
-      - okapi_two_default
+      - marobix_default
     restart: unless-stopped
 
 networks:
-  okapi_two_default:
+  marobix_default:
     external: true
-    name: okapi_two_default
+    name: marobix_default
